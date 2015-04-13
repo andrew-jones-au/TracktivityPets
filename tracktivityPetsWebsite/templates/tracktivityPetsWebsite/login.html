@@ -13,6 +13,12 @@
 		{% csrf_token %} 
 		<input type="submit" name="logout_submit" value="Logout" /> 
 	</form>
+			{% if not synched %}
+			<form action="/fitbit/login/" method="POST">
+			{% csrf_token %}
+			<input type="submit" name="link_fitbit" value="Link Fitbit Account" /> 
+			</form>
+		{% endif %}
 
 {% comment %} Do this if user is not logged in {% endcomment %}	
 {% else %} 
@@ -34,5 +40,4 @@
 		
 		<input type="submit" name="login_submit" value="Submit" />
 	</form>
-
 {% endif %}

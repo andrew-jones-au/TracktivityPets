@@ -1,10 +1,14 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
+import fitapp
 
 def user_login(request):
     if  request.user.is_authenticated(): #if user is logged in
-        return render(request, 'tracktivityPetsWebsite/login.html')
+        fitbit_synched = False;
+        if fitapp.utils.is_integrated(request.user):
+            fitbit_synched = True
+        return render(request, 'tracktivityPetsWebsite/login.html', {"synched": fitbit_synched})
     
     elif request.method == 'POST': #if http request was made with POST type
         try:
@@ -21,8 +25,14 @@ def user_login(request):
         if user is not None:
             if user.is_active: #if the account is activated
                 login(request, user) #log the user into a session
-                return render(request, 'tracktivityPetsWebsite/login.html')
+                fitbit_synched = False;
+                if fitapp.utils.is_integrated(user):
+                    fitbit_synched = True
+                return render(request, 'tracktivityPetsWebsite/login.html', {"synched": fitbit_synched})
             else:
+                fitbit_synched = False;
+                if fitapp.utils.is_integrated(user):
+                    fitbit_synched = True
                 return render(request, 'tracktivityPetsWebsite/login.html')
         else:
             return render(request, 'tracktivityPetsWebsite/login.html', { "error_message": "Incorrect username/password combination" }) #no user was found

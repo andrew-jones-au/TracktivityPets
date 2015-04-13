@@ -84,8 +84,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-FITAPP_CONSUMER_KEY = '###############'
-FITAPP_CONSUMER_SECRET = '############'
+FITAPP_CONSUMER_KEY = '##'
+FITAPP_CONSUMER_SECRET = '##'
 
 LOGIN_REDIRECT_URL = "/login/"
 LOGIN_URL = "/login/"
+
+#FITAPP_SUBSCRIBE = True
